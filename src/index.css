@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bg-sidebar {
+    background: rgba(120, 144, 156, 1);
+  }
+  .cta-btn {
+    color: rgba(120, 144, 156, 1);
+  }
+  .upgrade-btn {
+    background: rgb(50, 75, 87);
+  }
+  .upgrade-btn:hover {
+    background: #0038fd;
+  }
+  .active-nav-link {
+    background: rgb(50, 75, 87);
+  }
+  .account-link:hover {
+    background: rgba(120, 144, 156, 1);
+  }
