@@ -54,6 +54,24 @@ export default function AllRoutes() {
         )}
       </Route>
 
+      {/* property */}
+      <Route
+        path="/juidco-app/property"
+        element={
+          <AuthGuard>
+            <MainLayout />
+          </AuthGuard>
+        }
+      >
+        {routes?.map(
+          ({ layout, pages }) =>
+            layout === 'Property' &&
+            pages?.map(({ id, path, element }) => (
+              <Route key={id} path={path} element={element} />
+            ))
+        )}
+      </Route>
+
       {/* water tanker routes */}
       <Route
         path="/juidco-app/water-tanker"

@@ -12,3 +12,5 @@ export const authApi = {
   ePramanLogin: '/e-pramaan/login',
   ePramanRedirect: '/e-pramaan/dashboard'
 };
+
+export const propertyApi = {};

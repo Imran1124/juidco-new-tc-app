@@ -35,7 +35,9 @@ const RedirectEPramaan = Loadable(
   lazy(() => import('../pages/juidco-app/auth/login-e-praman/rediectEpramaan'))
 );
 
-const Crud = Loadable(lazy(() => import('../pages/juidco-app/crud')));
+const SiteVerificationList = Loadable(
+  lazy(() => import('../pages/juidco-app/property/saf-verification-list'))
+);
 
 const routes = [
   // auth routes
@@ -88,6 +90,17 @@ const routes = [
         name: 'Crud',
         path: 'crud',
         element: <Crud />
+      }
+    ]
+  },
+  {
+    layout: 'Property',
+    pages: [
+      {
+        id: 1,
+        name: 'Site Verification List',
+        path: 'site-verification-list',
+        element: <SiteVerificationList />
       }
     ]
   },
