@@ -84,12 +84,6 @@ const routes = [
         name: 'Home',
         path: 'home',
         element: <Dashboard />
-      },
-      {
-        id: 2,
-        name: 'Crud',
-        path: 'crud',
-        element: <Crud />
       }
     ]
   },

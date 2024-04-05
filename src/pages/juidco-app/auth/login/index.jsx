@@ -1,10 +1,10 @@
 import React from 'react';
-import { useFormik } from 'formik';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
 import {
-  FormProvider,
   TextField,
   PasswordField,
   LoadingButton
@@ -14,58 +14,59 @@ import useErrorAutoFocusField from '../../../../hooks/useErrorFocusField';
 import { usePostMutation } from '../../../../hooks/useCustomQuery';
 import { authApi } from '../../../../utils';
 import { useAppContext } from '../../../../context';
+import { FormProvider, RHFTextField } from '../../../../components/hook-form';
 
 export default function Login() {
   const { AutoFocusErrorField } = useErrorAutoFocusField();
   const ctxValue = useAppContext();
   const { mutateAsync, isLoading } = usePostMutation({});
-  const formik = useFormik({
-    initialValues: {
+
+  // sasadasd
+  const methods = useForm({
+    defaultValues: {
       email: '',
       password: '',
       type: 'mobile'
     },
-    validationSchema: Yup.object({
-      email: Yup.string().required('Required'),
-      password: Yup.string().required('Required')
-    }),
-    onSubmit: async (values) => {
-      try {
-        const response = await mutateAsync({
-          api: authApi.login1,
-          data: values
-        });
-        if (response?.data?.status === true) {
-          ctxValue?.login(response);
-          toast.success(response?.data?.message);
-        } else {
-          toast.error(response?.data?.message);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    resolver: yupResolver(
+      Yup.object({
+        email: Yup.string().required('Required'),
+        password: Yup.string().required('Required')
+      })
+    )
   });
 
-  const { isSubmitting, submitCount, errors } = formik;
+  const onSubmit = async (data) => {
+    try {
+      const response = await mutateAsync({
+        api: authApi.login1,
+        data: data
+      });
+      if (response?.data?.status === true) {
+        ctxValue?.login(response);
+        toast.success(response?.data?.message);
+      } else {
+        toast.error(response?.data?.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  React.useEffect(() => {
-    AutoFocusErrorField({ formik });
-  }, [errors, submitCount, isSubmitting]);
+  const { handleSubmit, formState } = methods;
 
   return (
     <Page title="Login">
       <div>
         {/* <h2 className=" font-semibold mb-4">Login with email No</h2> */}
-        <FormProvider formik={formik}>
-          <TextField
-            label="email No"
+        <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+          <RHFTextField
+            label="Email"
             name="email"
             type="email"
-            formik={formik}
-            placeholder="Enter your register email no"
+            placeholder="Enter email"
           />
-          <PasswordField label="Password" name="password" formik={formik} />
+          <RHFTextField label="Password" name="password" />
           <div className="text-center mt-8">
             <LoadingButton
               type="submit"

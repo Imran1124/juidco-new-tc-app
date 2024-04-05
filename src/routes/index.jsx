@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { GuestGuard, AuthGuard } from '../guard';
-import { AuthLayout, MainLayout } from '../layouts';
+import { AuthLayout, MainLayout, PageLayout } from '../layouts';
 import { routes } from './allRoutes';
 import NotFound from '../pages/404.jsx';
 
@@ -59,7 +59,7 @@ export default function AllRoutes() {
         path="/juidco-app/property"
         element={
           <AuthGuard>
-            <MainLayout />
+            <PageLayout />
           </AuthGuard>
         }
       >
