@@ -15,6 +15,7 @@ import { usePostMutation } from '../../../../hooks/useCustomQuery';
 import { authApi } from '../../../../utils';
 import { useAppContext } from '../../../../context';
 import { FormProvider, RHFTextField } from '../../../../components/hook-form';
+import { encryptPassword } from '../../../../hooks/useCrypto';
 
 export default function Login() {
   const { AutoFocusErrorField } = useErrorAutoFocusField();
@@ -40,7 +41,11 @@ export default function Login() {
     try {
       const response = await mutateAsync({
         api: authApi.login1,
-        data: data
+        data: {
+          email: data.email,
+          password: encryptPassword(data.password),
+          type: data.type
+        }
       });
       if (response?.data?.status === true) {
         ctxValue?.login(response);
